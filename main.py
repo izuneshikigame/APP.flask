@@ -1,6 +1,8 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect, url_for, make_response
-from importlab import Document
+from flask import Flask, render_template, request, redirect, url_for, make_response, send_file
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import io
 
 app = Flask(__name__)
 
@@ -115,38 +117,48 @@ def gerar_pdf():
     users = conn.execute('SELECT * FROM usuarios').fetchall()
     conn.close()
 
-    # Criar o documento PDF usando importlab
-    doc = Document()
+    # Criar um buffer para armazenar o PDF
+    buffer = io.BytesIO()
+
+    # Criar o documento PDF usando reportlab
+    pdf = canvas.Canvas(buffer, pagesize=letter)
+    width, height = letter
+
+    pdf.setTitle("Lista de Usuários")
 
     # Adicionar título
-    doc.add_paragraph('Lista de Usuários', style='Title')
+    pdf.setFont("Helvetica-Bold", 16)
+    pdf.drawString(30, height - 40, "Lista de Usuários")
 
     # Adicionar a tabela de usuários no PDF
-    table = doc.add_table(rows=1, cols=4)  # 4 colunas: ID, Nome, Email, Data de Cadastro
-    table.style = 'Table Grid'
+    pdf.setFont("Helvetica", 12)
+    x = 30
+    y = height - 80
+    pdf.drawString(x, y, "ID")
+    pdf.drawString(x + 50, y, "Nome")
+    pdf.drawString(x + 200, y, "E-mail")
+    pdf.drawString(x + 400, y, "Data de Cadastro")
 
-    # Cabeçalho da tabela
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = 'ID'
-    hdr_cells[1].text = 'Nome'
-    hdr_cells[2].text = 'E-mail'
-    hdr_cells[3].text = 'Data de Cadastro'
+    y -= 20
 
     # Adicionar as linhas de usuários na tabela
     for user in users:
-        row_cells = table.add_row().cells
-        row_cells[0].text = str(user['id_usuario'])
-        row_cells[1].text = user['nome']
-        row_cells[2].text = user['email']
-        row_cells[3].text = user['data_cadastro']
+        pdf.drawString(x, y, str(user['id_usuario']))
+        pdf.drawString(x + 50, y, user['nome'])
+        pdf.drawString(x + 200, y, user['email'])
+        pdf.drawString(x + 400, y, user['data_cadastro'])
+        y -= 20
+        if y < 40:
+            pdf.showPage()
+            y = height - 40
 
-    # Gerar o PDF e enviar como resposta
-    pdf_output = doc.render_pdf()
-    
-    response = make_response(pdf_output)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=usuarios.pdf'
-    return response
+    pdf.save()
+
+    # Rewind the buffer
+    buffer.seek(0)
+
+    # Enviar o PDF como resposta
+    return send_file(buffer, as_attachment=True, download_name='usuarios.pdf', mimetype='application/pdf')
 
 # Rota principal
 @app.route('/')

@@ -71,10 +71,10 @@
                         <td>{{ user.email }}</td>
                         <td>{{ user.data_cadastro }}</td>
                         <td>
-                            <a href="{{ url_for('edit_user', user_id=user.id_usuario) }}" class="btn btn-warning btn-sm">
+                            <a href="{{ url_for('edit_user', id=user.id_usuario) }}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-user-edit"></i> Editar
                             </a>
-                            <a href="{{ url_for('delete_user', user_id=user.id_usuario) }}" class="btn btn-danger btn-sm">
+                            <a href="{{ url_for('delete_user', id=user.id_usuario) }}" class="btn btn-danger btn-sm">
                                 <i class="fas fa-trash"></i> Deletar
                             </a>
                         </td>
