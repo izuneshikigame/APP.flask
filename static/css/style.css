@@ -1,0 +1,123 @@
+/* Reset básico */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212; /* Preto */
+    color: #fff; /* Texto branco */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #a970ff; /* Roxo claro */
+}
+
+a {
+    color: #a970ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Container do formulário */
+.form-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    background: #1e1e1e; /* Fundo escuro */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid #a970ff;
+}
+
+/* Campos de entrada */
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #2e2e2e;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: #a970ff;
+    outline: none;
+    box-shadow: 0 0 5px #a970ff;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Botão */
+.btn {
+    width: 100%;
+    padding: 10px;
+    background: #a970ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background: #803ad4;
+}
+
+/* Tabela */
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #2e2e2e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th, table td {
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}
+
+table th {
+    background: #803ad4;
+}
+
+table tr:nth-child(even) {
+    background: #1e1e1e;
+}
+
+table tr:nth-child(odd) {
+    background: #2e2e2e;
+}
+
+.btn-action {
+    padding: 5px 10px;
+    background: #a970ff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-action:hover {
+    background: #803ad4;
+}
