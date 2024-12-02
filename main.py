@@ -156,7 +156,7 @@ def add_user():
             return render_template('add_user.html')
 
 
-        # Insere o novo usuário no banco
+
         cursor.execute(
             'INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)',
             (nome, email, senha)
